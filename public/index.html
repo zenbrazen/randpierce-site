@@ -105,6 +105,8 @@ input[type=email]:focus-visible{outline:none;border-color:#fff}
 .btn:hover{background:#eef3f5;color:#23303b}
 .btn[disabled]{opacity:.6;cursor:progress}
 .about-email{margin-top:8px;font-size:17px;color:var(--text-strong)}
+.linkbtn{padding:0;border:0;background:none;font:inherit;color:var(--text-strong);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.linkbtn:hover{color:#fff}
 .note{margin:0;font-size:12px;line-height:1.7;color:var(--label)}
 .error{margin:0;font-size:13px;color:#fff}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
@@ -227,7 +229,7 @@ input[type=email]:focus-visible{outline:none;border-color:#fff}
       <p class="error" id="email-error" role="alert" hidden></p>
       <button type="submit" class="btn" id="email-submit">CONTINUE</button>
       <!-- Wording matches how the list is used: only to send the script. Update if that ever changes. -->
-      <p class="note">I'll use your email to send you the script.</p>
+      <p class="note">By downloading, you agree to the <button type="button" class="linkbtn" data-open="dlg-terms">Terms</button>. I'll use your email to send you the script.</p>
     </form>
 
     <div id="download-done" class="stack" hidden>
