@@ -28,7 +28,7 @@ Suggested layout:
 3. On submit the page `POST`s JSON `{ "email": "...", "website": "" }` to `/api/download` and expects `200` with `{ "downloadUrl": "..." }`. On success the modal swaps, in place, to a **DOWNLOAD PDF** link. Any non-200 shows "Something went wrong. Please try again."
 4. `website` is a honeypot field humans never fill. If it is non-empty, the server should pretend success and do nothing.
 5. When `index.html` is opened from disk (`file://`) it skips the network call and shows a placeholder link, so the flow can be previewed without a server. That branch is inert in production.
-6. ABOUT and TERMS open native `<dialog>` overlays. The ABOUT dialog holds the bio, the contact email (bold, not a link) and a Bluesky icon linking to https://bsky.app/profile/randpierce.bsky.social.
+6. ABOUT and TERMS open native `<dialog>` overlays. The ABOUT dialog holds the bio and the contact email (bold, not a link). The footer has a Bluesky icon between ABOUT and TERMS linking to https://bsky.app/profile/randpierce.bsky.social.
 
 ## Backend to build
 
