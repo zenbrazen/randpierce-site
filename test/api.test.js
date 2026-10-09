@@ -92,3 +92,12 @@ test('download: sixth request from one IP in the window gets 429', async () => {
   await download(post('a@b.co', '4.4.4.4'), other);
   assert.equal(other.statusCode, 200);
 });
+
+test('download: 500 with a clear error when DOWNLOAD_SECRET is missing', async () => {
+  const saved = process.env.DOWNLOAD_SECRET;
+  delete process.env.DOWNLOAD_SECRET;
+  const res = mockRes();
+  await download(post('a@b.co', '5.5.5.5'), res);
+  process.env.DOWNLOAD_SECRET = saved;
+  assert.equal(res.statusCode, 500);
+});

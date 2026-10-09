@@ -36,6 +36,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'method not allowed' });
   }
 
+  if (!process.env.DOWNLOAD_SECRET) {
+    console.error('DOWNLOAD_SECRET is not set; add it in Vercel and redeploy');
+    return res.status(500).json({ error: 'server not configured' });
+  }
+
   const body = req.body;
   if (!body || typeof body !== 'object') return res.status(400).json({ error: 'invalid body' });
 
