@@ -71,7 +71,7 @@ Never commit secrets. Add `.env*` to `.gitignore`. Provide `.env.example`.
 2. In Resend, add and verify `randpierce.com` so notifications send from the owner's own domain. Resend lists the SPF/DKIM DNS records to add at the registrar. Walk the owner through this step by step when you get there.
 
 ## Content gaps (placeholders still in the page)
-- **TERMS text**: still a placeholder; the owner supplies the final text. Search `index.html` for `[`. (The ABOUT bio and contact email are done.)
+- ABOUT bio, contact email and TERMS text are done (owner-supplied). The Terms say the email is used only to send the script, and that the owner sees the address and download time; if the list is ever used for anything else, update the modal copy and TERMS first.
 - **The screenplay PDF itself**: the owner supplies it as `POP-POP.pdf`.
 - **Favicon**: none yet. Ask the owner, or derive a simple one from the logo.
 - `og:image` and `og:url`: make absolute once the domain is live.

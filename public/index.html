@@ -86,7 +86,12 @@ dialog{width:calc(100% - 40px);max-width:440px;padding:0;border:0;box-shadow:0 2
 dialog.wide{max-width:560px}
 dialog::backdrop{background:rgba(196,216,230,0.3)}
 .dlg-body{position:relative;padding:48px 40px 36px}
-dialog.wide .dlg-body{padding:48px 40px 40px}
+dialog.wide{overflow:hidden;max-height:calc(100vh - 40px);max-height:calc(100dvh - 40px)}
+dialog.wide .dlg-body{display:flex;flex-direction:column;padding:0;max-height:calc(100vh - 40px);max-height:calc(100dvh - 40px)}
+.dlg-scroll{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:48px 40px 40px}
+.terms-h{margin:0;font-weight:500;font-size:11px;letter-spacing:0.25em;color:var(--accent)}
+.terms-sec{display:flex;flex-direction:column;gap:10px}
+.terms .dlg-text{font-size:14px;line-height:1.65}
 .closebtn{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;background:none;cursor:pointer;color:var(--muted);font-size:22px;line-height:1}
 .dlg-title{margin:0 0 16px;font-weight:500;font-size:24px;letter-spacing:0.22em;color:var(--text-strong)}
 .dlg-copy{margin:0;font-size:14px;line-height:1.7;color:var(--muted-2)}
@@ -126,7 +131,7 @@ input[type=email]:focus-visible{outline:none;border-color:#fff}
 @media (max-width:600px){
   .column{padding:60px 20px 16px;gap:56px}
   .tagline{font-size:15px;margin-top:8px}
-  dialog.wide .dlg-body{padding:48px 24px 28px}
+  dialog.wide .dlg-scroll{padding:48px 24px 28px}
   dialog.wide .dlg-text{font-size:15px;line-height:1.65}
   .feature{gap:28px}
 }
@@ -238,23 +243,66 @@ input[type=email]:focus-visible{outline:none;border-color:#fff}
 <dialog id="dlg-about" class="wide" aria-label="About Rand Pierce">
   <div class="dlg-body">
     <button type="button" class="closebtn" data-close aria-label="Close">&times;</button>
-    <div class="stack">
+    <div class="dlg-scroll"><div class="stack">
       <p class="dlg-text">Rand Pierce is a graduate of New York University's Tisch School of the Arts (Film Production).</p>
       <p class="dlg-text">For most of his career, he was a Graphic Artist and User Interface Designer for video games (Paul Rand Pierce). He worked for 13 years at LucasArts working on Star Wars and a variety of other video game and development projects.</p>
       <p class="dlg-text">Other employers and clients following that included Crowdstar, Glu Mobile, ngmoco, Akili Interactive, Twin Suns Corp and 2K Games.</p>
       <p class="dlg-text">He was the sole winner of Walt Disney Imagineering R&amp;D's Living Worlds Transmedia story competition, and was employed as a narrative consultant for 1.5 years on the development of his own project.</p>
       <p class="dlg-text">POP POP is his first screenplay. A slate of other original screenplays is in development.</p>
       <p class="dlg-text about-email">Contact: <strong>rand@randpierce.com</strong></p>
-    </div>
+    </div></div>
   </div>
 </dialog>
 
-<!-- ===== Terms dialog (placeholder copy: owner to supply final text) ===== -->
-<dialog id="dlg-terms" class="wide" aria-labelledby="terms-title">
+<!-- ===== Terms dialog ===== -->
+<dialog id="dlg-terms" class="wide" aria-label="Terms">
   <div class="dlg-body">
     <button type="button" class="closebtn" data-close aria-label="Close">&times;</button>
-    <h2 class="dlg-title" id="terms-title">TERMS</h2>
-    <p class="dlg-text">[Terms go here: the screenplay is copyrighted material, provided for reading only, and may not be copied, distributed, or produced without written permission. Your email is used only to deliver the script.]</p>
+    <div class="dlg-scroll terms">
+      <div class="stack" style="gap:26px">
+        <section class="terms-sec">
+          <h2 class="terms-h">COPYRIGHT AND OWNERSHIP</h2>
+          <p class="dlg-text">All content on this site, including the screenplay POP POP, its title, story, characters and dialogue, as well as the logo, poster artwork, design and text, is the original work and property of Rand Pierce.<br>&copy; 2026 Paul Rand Pierce. All rights reserved.</p>
+          <p class="dlg-text">All screenplays available for review or download have been registered with the U.S. Copyright Office.</p>
+        </section>
+        <section class="terms-sec">
+          <h2 class="terms-h">PERMISSION TO READ</h2>
+          <p class="dlg-text">Downloading the screenplay gives you a personal, non-exclusive, non-transferable permission to read it for your own evaluation. It does not give you any ownership, license, option or other right in the screenplay. You may not copy, share, post, forward, sell, distribute, adapt, develop, produce or publicly perform it, in whole or in part, or use it to train, fine-tune or prompt any AI system, without my prior written permission. If a colleague wants to read it, please send them to this page.</p>
+        </section>
+        <section class="terms-sec">
+          <h2 class="terms-h">OPTIONS, SALES AND INQUIRIES</h2>
+          <p class="dlg-text">POP POP is available for sale or option. Nothing on this site is an offer, and no agreement exists unless it is in writing and signed by the appropriate parties. To discuss rights, please use the contact link below.</p>
+        </section>
+        <section class="terms-sec">
+          <h2 class="terms-h">NO UNSOLICITED IDEAS</h2>
+          <p class="dlg-text">Story ideas, pitches or other material from visitors to this site will not be read and will be discarded. Anything you send me is sent without any expectation of confidentiality or compensation.</p>
+        </section>
+        <section class="terms-sec">
+          <h2 class="terms-h">YOUR EMAIL ADDRESS</h2>
+          <p class="dlg-text">I ask for your email address so I can send you the script. I can see your address and when you downloaded the script. I will not sell it or share it, except with the services that run this site and deliver my notifications. I use it only for this purpose. To have your address deleted, contact me at the address below.</p>
+        </section>
+        <section class="terms-sec">
+          <h2 class="terms-h">FICTION</h2>
+          <p class="dlg-text">POP POP and all other posted screenplays are works of fiction. Any resemblance to real people or events is coincidental.</p>
+        </section>
+        <section class="terms-sec">
+          <h2 class="terms-h">NO WARRANTIES</h2>
+          <p class="dlg-text">This site and the screenplay are provided "as is," without warranties of any kind. To the extent the law allows, I'm not liable for any loss arising from your use of the site or the screenplay.</p>
+        </section>
+        <section class="terms-sec">
+          <h2 class="terms-h">LINKS</h2>
+          <p class="dlg-text">Links to other sites (such as Bluesky) are provided for convenience. I don't control those sites.</p>
+        </section>
+        <section class="terms-sec">
+          <h2 class="terms-h">GOVERNING LAW</h2>
+          <p class="dlg-text">These terms are governed by the laws of Washington in the United States of America.</p>
+        </section>
+        <section class="terms-sec">
+          <h2 class="terms-h">CHANGES</h2>
+          <p class="dlg-text">I may update these terms from time to time. The version on this page is the one that applies. Last updated: October 9, 2026.</p>
+        </section>
+      </div>
+    </div>
   </div>
 </dialog>
 
