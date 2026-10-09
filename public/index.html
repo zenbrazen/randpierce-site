@@ -126,6 +126,14 @@ input[type=email]:focus-visible{outline:none;border-color:#fff}
   .tagline{font-size:15px}
   .feature{gap:28px}
 }
+/* Upright phones: poster with READ NOW beneath it on the left, all text in one column on the right. */
+@media (max-width:600px) and (orientation:portrait){
+  .feature{display:grid;grid-template-columns:100px minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:20px;row-gap:24px;align-items:start;padding:36px 0}
+  .poster{grid-column:1;grid-row:1}
+  .read-col{grid-column:1;grid-row:2;width:100px}
+  .details{grid-column:2;grid-row:1 / span 2;gap:20px}
+  .logline{font-size:14px;line-height:1.6}
+}
 </style>
 </head>
 <body>
