@@ -134,6 +134,11 @@ input[type=email]:focus-visible{outline:none;border-color:#fff}
   .details{grid-column:2;grid-row:1 / span 2;gap:20px}
   .logline{font-size:14px;line-height:1.6}
 }
+/* Phones, upright or sideways: inset the name and the "NEW AND ORIGINAL" line slightly from the hairlines. */
+@media (max-width:600px), (orientation:landscape) and (max-height:500px){
+  .logo{width:94%}
+  .pipeline{width:94%;align-self:center}
+}
 </style>
 </head>
 <body>
