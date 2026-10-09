@@ -26,7 +26,7 @@
   --label:#b9c9d2;
   --line:rgba(255,255,255,0.25);
   --bg-deep:#1b2d42;
-  --panel:#2a3946;
+  --panel:#131d27;
 }
 *{box-sizing:border-box}
 html{background:var(--bg-deep)}
@@ -82,9 +82,9 @@ body{margin:0;background:var(--bg-deep);color:var(--text);font-family:'Cabin',sy
 a:focus-visible,button:focus-visible,input:focus-visible{outline:1px solid #fff;outline-offset:6px}
 
 /* ---------- dialogs ---------- */
-dialog{width:calc(100% - 40px);max-width:440px;padding:0;border:1px solid rgba(255,255,255,0.4);background:var(--panel);color:var(--text);font-family:inherit}
+dialog{width:calc(100% - 40px);max-width:440px;padding:0;border:0;box-shadow:0 24px 70px rgba(8,14,20,0.45);background:var(--panel);color:var(--text);font-family:inherit}
 dialog.wide{max-width:560px}
-dialog::backdrop{background:rgba(14,20,26,0.78)}
+dialog::backdrop{background:rgba(196,216,230,0.5)}
 .dlg-body{position:relative;padding:48px 40px 36px}
 dialog.wide .dlg-body{padding:48px 40px 40px}
 .closebtn{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;background:none;cursor:pointer;color:var(--muted);font-size:22px;line-height:1}
