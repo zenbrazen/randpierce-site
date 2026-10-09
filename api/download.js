@@ -1,9 +1,19 @@
-import { getRedis, normalizeEmail, makeToken, clientIp, hashIp } from '../lib/common.js';
+import { normalizeEmail, makeToken, clientIp, hashIp } from '../lib/common.js';
 
 const RATE_LIMIT = 5;
-const RATE_WINDOW_SECONDS = 600;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+// Best-effort only: lives in one serverless instance's memory and resets on a cold start.
+const hits = new Map();
 
-async function notifyOwner({ email, createdAt, total, unique }) {
+function rateLimited(key, now = Date.now()) {
+  const recent = (hits.get(key) || []).filter((t) => now - t < RATE_WINDOW_MS);
+  recent.push(now);
+  hits.set(key, recent);
+  if (hits.size > 5000) hits.clear();
+  return recent.length > RATE_LIMIT;
+}
+
+async function notifyOwner({ email, createdAt }) {
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -13,8 +23,8 @@ async function notifyOwner({ email, createdAt, total, unique }) {
     body: JSON.stringify({
       from: process.env.MAIL_FROM,
       to: process.env.NOTIFY_EMAIL,
-      subject: `New POP POP download: ${email} (#${total})`,
-      text: `Email: ${email}\nTime: ${createdAt}\nTotal downloads: ${total}\nUnique emails: ${unique}\n`
+      subject: `New POP POP download: ${email}`,
+      text: `Email: ${email}\nTime: ${createdAt}\n`
     })
   });
   if (!res.ok) throw new Error(`Resend responded ${res.status}: ${await res.text()}`);
@@ -36,22 +46,11 @@ export default async function handler(req, res) {
   const email = normalizeEmail(body.email);
   if (!email) return res.status(400).json({ error: 'invalid email' });
 
-  const redis = getRedis();
-  const ipHash = hashIp(clientIp(req));
-
-  const rlKey = `rl:${ipHash}`;
-  const hits = await redis.incr(rlKey);
-  if (hits === 1) await redis.expire(rlKey, RATE_WINDOW_SECONDS);
-  if (hits > RATE_LIMIT) return res.status(429).json({ error: 'too many requests' });
+  if (rateLimited(hashIp(clientIp(req)))) return res.status(429).json({ error: 'too many requests' });
 
   const createdAt = new Date().toISOString();
-  const total = await redis.incr('downloads:total');
-  await redis.rpush('downloads', JSON.stringify({ email, createdAt, ipHash }));
-  await redis.sadd('downloads:emails', email);
-  const unique = await redis.scard('downloads:emails');
-
   try {
-    await notifyOwner({ email, createdAt, total, unique });
+    await notifyOwner({ email, createdAt });
   } catch (err) {
     console.error('owner notification failed:', err.message);
   }

@@ -2,11 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 process.env.DOWNLOAD_SECRET = 'test-secret';
-process.env.ADMIN_TOKEN = 'admin-secret';
+process.env.RESEND_API_KEY = 're_test';
+process.env.NOTIFY_EMAIL = 'owner@example.com';
+process.env.MAIL_FROM = 'POP POP <onboarding@resend.dev>';
 
 const { normalizeEmail, makeToken, verifyToken } = await import('../lib/common.js');
 const script = (await import('../api/script.js')).default;
-const exportCsv = (await import('../api/export.js')).default;
 const download = (await import('../api/download.js')).default;
 
 function mockRes() {
@@ -44,15 +45,6 @@ test('script: 403 without a valid token', async () => {
   assert.equal(res.statusCode, 403);
 });
 
-test('export: 401 without admin token', async () => {
-  const res = mockRes();
-  await exportCsv({ headers: {} }, res);
-  assert.equal(res.statusCode, 401);
-  const res2 = mockRes();
-  await exportCsv({ headers: { authorization: 'Bearer wrong' } }, res2);
-  assert.equal(res2.statusCode, 401);
-});
-
 test('download: honeypot pretends success, bad email is 400, GET is 405', async () => {
   let res = mockRes();
   await download({ method: 'POST', body: { email: 'a@b.co', website: 'spam' }, headers: {} }, res);
@@ -63,4 +55,40 @@ test('download: honeypot pretends success, bad email is 400, GET is 405', async 
   res = mockRes();
   await download({ method: 'GET', headers: {} }, res);
   assert.equal(res.statusCode, 405);
+});
+
+function post(email, ip = '1.1.1.1') {
+  return { method: 'POST', body: { email, website: '' }, headers: { 'x-forwarded-for': ip } };
+}
+
+test('download: success emails the owner and returns a working link', async () => {
+  const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url, init }); return { ok: true }; };
+  const res = mockRes();
+  await download(post('  Reader@Example.com '), res);
+  assert.equal(res.statusCode, 200);
+  assert.match(res.body.downloadUrl, /^\/api\/script\?t=/);
+  assert.equal(verifyToken(res.body.downloadUrl.split('t=')[1]), true);
+  assert.equal(calls.length, 1);
+  const sent = JSON.parse(calls[0].init.body);
+  assert.equal(sent.to, 'owner@example.com');
+  assert.match(sent.subject, /reader@example\.com/);
+});
+
+test('download: still returns the link when the email service fails', async () => {
+  globalThis.fetch = async () => ({ ok: false, status: 500, text: async () => 'boom' });
+  const res = mockRes();
+  await download(post('a@b.co', '2.2.2.2'), res);
+  assert.equal(res.statusCode, 200);
+  assert.match(res.body.downloadUrl, /^\/api\/script\?t=/);
+});
+
+test('download: sixth request from one IP in the window gets 429', async () => {
+  globalThis.fetch = async () => ({ ok: true });
+  let last;
+  for (let i = 0; i < 6; i++) { last = mockRes(); await download(post('a@b.co', '3.3.3.3'), last); }
+  assert.equal(last.statusCode, 429);
+  const other = mockRes();
+  await download(post('a@b.co', '4.4.4.4'), other);
+  assert.equal(other.statusCode, 200);
 });

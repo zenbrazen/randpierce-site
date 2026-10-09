@@ -35,9 +35,9 @@ Suggested layout:
 ### `POST /api/download`
 - Validate: JSON body, `email` is a string, trimmed, lowercased, max 254 chars, simple format check. Reject otherwise with 400.
 - Honeypot: if `website` is non-empty, return `200 { "downloadUrl": "#" }` and do nothing else.
-- Rate limit per IP (for example 5 requests per 10 minutes) using the same store. Return 429 when exceeded. Store only a salted hash of the IP, never the raw IP.
-- Store a record: `{ email, createdAt, ipHash }`. Keep a running total of downloads and a count of unique emails.
-- Email the owner via **Resend**: subject like `New POP POP download: someone@example.com (#42)`, body with the email, timestamp, total downloads and unique emails. If the email send fails, log it and **still return the link** (the stored record is the source of truth).
+- Rate limit per IP: 5 requests per 10 minutes, kept in memory (best effort; it resets on a cold start). Return 429 when exceeded. Only a salted hash of the IP is used, never the raw IP.
+- No database. The owner notification email is the record of each download.
+- Email the owner via **Resend**: subject `New POP POP download: someone@example.com`, body with the email and timestamp. If the email send fails, log it and still return the link.
 - Return `{ "downloadUrl": "/api/script?t=<token>" }`.
 - The token is `base64url(JSON {exp})` + `.` + HMAC-SHA256 signature using `DOWNLOAD_SECRET`, valid about 15 minutes. Use a constant-time comparison to verify.
 
@@ -52,17 +52,15 @@ The goal is that every download corresponds to an email the owner receives, so t
 - If the repo is ever made public, the PDF must move to private storage first.
 
 ### Storage for the list
-Pick one small option and say why in the PR. Check what Vercel currently offers in its Marketplace: for example Upstash Redis, or a Neon Postgres table. Requirements: append a record, count total and unique, rate-limit counters, and export. Add `GET /api/export` (protected by `ADMIN_TOKEN` in an `Authorization: Bearer` header) that returns the list as CSV with the counts, so the owner can see who and how many.
+Deliberately none (simplest setup). Each download is recorded only as the notification email in the owner's inbox. If a CSV export, running counts or durable rate limits are wanted later, add Upstash Redis from the Vercel Marketplace (an earlier version of this repo had it; see git history).
 
 ### Environment variables
 | Name | Purpose |
 |---|---|
 | `RESEND_API_KEY` | send owner notifications |
-| `NOTIFY_EMAIL` | owner's inbox (**ask the owner**) |
-| `MAIL_FROM` | for example `POP POP Downloads <downloads@randpierce.com>` |
-| `DOWNLOAD_SECRET` | HMAC key for download tokens (long random string) |
-| `ADMIN_TOKEN` | protects `/api/export` |
-| storage vars | whatever the chosen store needs |
+| `NOTIFY_EMAIL` | owner's inbox: `rand@randpierce.com` |
+| `MAIL_FROM` | sender. Start with `POP POP Downloads <onboarding@resend.dev>` (Resend's test sender, delivers only to the Resend account's own email). Switch to `downloads@randpierce.com` after verifying the domain in Resend. |
+| `DOWNLOAD_SECRET` | HMAC key for download tokens and IP hashing (long random string) |
 
 Never commit secrets. Add `.env*` to `.gitignore`. Provide `.env.example`.
 
@@ -102,7 +100,7 @@ Never commit secrets. Add `.env*` to `.gitignore`. Provide `.env.example`.
 **Mobile:** the panel wraps (poster, details and icon stack). Verify at 390px and 360px wide.
 
 ## Before calling it done
-- Full flow works on a Vercel preview URL: email, record stored, owner notified, PDF downloads.
+- Full flow works on a Vercel preview URL: email entered, owner notified, PDF downloads.
 - The PDF is **not** reachable by any direct URL (try `/POP-POP.pdf`, `/private/POP-POP.pdf`, `/assets/...`). An expired or tampered token returns 403.
 - Keyboard: Tab order sensible, Esc closes dialogs, focus lands in the email field when the modal opens.
 - Mobile and reduced-motion checks; Lighthouse performance and accessibility.
