@@ -133,6 +133,10 @@ input[type=email]:focus-visible{outline:none;border-color:#fff}
   .read-col{grid-column:1;grid-row:2;width:100px}
   .details{grid-column:2;grid-row:1 / span 2;gap:20px}
   .logline{font-size:14px;line-height:1.6}
+  .footer-nav{flex-wrap:nowrap;justify-content:space-between;gap:0;font-size:10.5px;letter-spacing:0.2em}
+  .footer-nav button,.footer-nav a{padding:0 2px}
+  .footer-nav [data-open="dlg-contact"]{order:3}
+  .footer-nav [data-open="dlg-terms"]{order:4}
 }
 /* Phones, upright or sideways: inset the name and the "NEW AND ORIGINAL" line slightly from the hairlines. */
 @media (max-width:600px), (orientation:landscape) and (max-height:500px){
