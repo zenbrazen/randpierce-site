@@ -28,7 +28,7 @@ Suggested layout:
 3. On submit the page `POST`s JSON `{ "email": "...", "website": "" }` to `/api/download` and expects `200` with `{ "downloadUrl": "..." }`. On success the modal swaps, in place, to a **DOWNLOAD PDF** link. Any non-200 shows "Something went wrong. Please try again."
 4. `website` is a honeypot field humans never fill. If it is non-empty, the server should pretend success and do nothing.
 5. When `index.html` is opened from disk (`file://`) it skips the network call and shows a placeholder link, so the flow can be previewed without a server. That branch is inert in production.
-6. ABOUT, TERMS and CONTACT open native `<dialog>` overlays. SOCIAL links to https://bsky.app/profile/randpierce.bsky.social.
+6. ABOUT and TERMS open native `<dialog>` overlays. The ABOUT dialog holds the bio, the contact email (bold, not a link) and a Bluesky icon linking to https://bsky.app/profile/randpierce.bsky.social.
 
 ## Backend to build
 
@@ -71,7 +71,7 @@ Never commit secrets. Add `.env*` to `.gitignore`. Provide `.env.example`.
 2. In Resend, add and verify `randpierce.com` so notifications send from the owner's own domain. Resend lists the SPF/DKIM DNS records to add at the registrar. Walk the owner through this step by step when you get there.
 
 ## Content gaps (placeholders still in the page)
-- **ABOUT bio**, **TERMS text**, **CONTACT email** (`[YOUR CONTACT EMAIL]`): the owner supplies the final text. Search `index.html` for `[`.
+- **TERMS text**: still a placeholder; the owner supplies the final text. Search `index.html` for `[`. (The ABOUT bio and contact email are done.)
 - **The screenplay PDF itself**: the owner supplies it as `POP-POP.pdf`.
 - **Favicon**: none yet. Ask the owner, or derive a simple one from the logo.
 - `og:image` and `og:url`: make absolute once the domain is live.
