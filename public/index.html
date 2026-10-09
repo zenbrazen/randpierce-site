@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rand Pierce | Screenwriter</title>
+<meta name="description" content="Rand Pierce is a screenwriter. Read POP POP, an action-comedy feature screenplay, available for sale or option.">
+<meta name="theme-color" content="#1b2d42">
+<!-- TODO: make og:image / og:url absolute once the domain is live (https://randpierce.com/...) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rand Pierce | Screenwriter">
+<meta property="og:description" content="Read POP POP, an action-comedy feature screenplay.">
+<meta property="og:image" content="/assets/pop-pop-poster.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600&amp;family=Montserrat:wght@700&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#E3EEF4;
+  --text:#eef3f5;
+  --text-strong:#f4f8fa;
+  --muted:#d3dee4;
+  --muted-2:#cdd9df;
+  --label:#b9c9d2;
+  --line:rgba(255,255,255,0.25);
+  --bg-deep:#1b2d42;
+  --panel:#2a3946;
+}
+*{box-sizing:border-box}
+html{background:var(--bg-deep)}
+body{margin:0;background:var(--bg-deep);color:var(--text);font-family:'Cabin',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+
+/* ---------- page shell ---------- */
+.page{
+  position:relative;min-height:100vh;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 0% 28%, rgba(176,204,218,0.30) 0%, rgba(176,204,218,0) 46%),
+    linear-gradient(180deg,#465c6d 0%,#34485a 45%,#1b2d42 100%);
+}
+.bg-photo{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;opacity:0.05;pointer-events:none;z-index:0}
+.dust{position:absolute;inset:0;pointer-events:none;z-index:0}
+.column{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:88px 32px 24px;display:flex;flex-direction:column;gap:72px}
+
+/* ---------- header ---------- */
+.masthead{position:relative;display:flex;flex-direction:column;align-items:center}
+.glow{position:absolute;left:50%;top:34%;width:min(95vw,1000px);height:min(95vw,1000px);transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(227,238,244,0.20) 0%,rgba(227,238,244,0.08) 38%,rgba(227,238,244,0) 68%)}
+.logo{position:relative;margin:0;width:100%}
+.logo img{display:block;width:100%;height:auto;opacity:0.85}
+.tagline{position:relative;margin:30px 0 0;padding-left:0.6em;font-weight:400;font-size:21px;letter-spacing:0.6em;color:var(--muted)}
+
+/* ---------- feature panel ---------- */
+.feature{position:relative;display:flex;flex-wrap:wrap;align-items:stretch;gap:36px;padding:48px 0}
+.rule{position:absolute;left:0;right:0;height:1px;background:var(--line);transform:scaleX(0);transform-origin:left;animation:draw 1.4s cubic-bezier(.2,.7,.2,1) .9s forwards}
+.rule.bottom{bottom:0;animation-delay:1.1s}
+.rule.top{top:0}
+.poster{flex:0 0 100px;display:block;width:100px;height:auto;aspect-ratio:2/3;object-fit:cover;align-self:flex-start;box-shadow:0 18px 40px rgba(10,16,22,0.4)}
+.details{flex:999 1 260px;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+.details-top{display:flex;flex-direction:column;gap:14px}
+.eyebrow{margin:0;font-weight:500;font-size:9px;letter-spacing:0.4em;color:var(--accent)}
+.title{margin:0;font-family:'Montserrat','Cabin',sans-serif;font-weight:700;font-size:26px;line-height:1.1;letter-spacing:0.12em;color:var(--text-strong)}
+.logline{margin:4px 0 0;font-weight:400;font-size:15px;line-height:1.7;color:var(--text)}
+.meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px;font-size:9px;letter-spacing:0.2em;line-height:1.9}
+.meta .k{color:var(--label)}
+.meta .status{color:var(--accent)}
+.read-col{flex:0 0 90px;display:flex;align-items:flex-start;justify-content:center}
+.readbtn{position:relative;width:84px;height:109px;padding:0;border:0;background:none;cursor:pointer;color:inherit}
+.readbtn svg{position:absolute;top:0;left:0;overflow:visible}
+.readbtn .pg{fill:rgba(255,255,255,0);transition:fill .3s ease}
+.readbtn:hover .pg{fill:rgba(255,255,255,0.14)}
+.readtxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-top:10px;padding-left:0.2em;font-weight:500;font-size:12px;line-height:1.25;letter-spacing:0.2em;text-align:center;color:var(--text-strong)}
+
+/* ---------- bottom line + footer ---------- */
+.pipeline{margin:0}
+.pipeline svg{display:block;width:100%;overflow:visible}
+.footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 32px;font-size:11px;letter-spacing:0.3em}
+.footer-nav button,.footer-nav a{display:flex;align-items:center;min-height:44px;padding:0 6px;border:0;background:none;cursor:pointer;font:inherit;letter-spacing:inherit;color:var(--muted-2);text-decoration:none;transition:color .3s ease}
+.footer-nav button:hover,.footer-nav a:hover{color:#fff}
+
+a:focus-visible,button:focus-visible,input:focus-visible{outline:1px solid #fff;outline-offset:6px}
+
+/* ---------- dialogs ---------- */
+dialog{width:calc(100% - 40px);max-width:440px;padding:0;border:1px solid rgba(255,255,255,0.4);background:var(--panel);color:var(--text);font-family:inherit}
+dialog.wide{max-width:560px}
+dialog::backdrop{background:rgba(14,20,26,0.78)}
+.dlg-body{position:relative;padding:48px 40px 36px}
+dialog.wide .dlg-body{padding:48px 40px 40px}
+.closebtn{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;background:none;cursor:pointer;color:var(--muted);font-size:22px;line-height:1}
+.dlg-title{margin:0 0 16px;font-weight:500;font-size:24px;letter-spacing:0.22em;color:var(--text-strong)}
+.dlg-copy{margin:0;font-size:14px;line-height:1.7;color:var(--muted-2)}
+.dlg-text{margin:0;font-size:16px;line-height:1.7;color:#e3ebef}
+.stack{display:flex;flex-direction:column;gap:16px}
+.field-label{margin-top:8px;font-weight:500;font-size:10px;letter-spacing:0.3em;color:var(--muted-2)}
+input[type=email]{height:48px;padding:0 2px;border:0;border-bottom:1px solid rgba(255,255,255,0.55);border-radius:0;background:transparent;color:var(--text-strong);font-family:inherit;font-weight:400;font-size:17px}
+input[type=email]::placeholder{color:#8fa3af}
+input[type=email]:focus-visible{outline:none;border-color:#fff}
+.btn{display:flex;align-items:center;justify-content:center;height:48px;margin-top:8px;border:1px solid rgba(255,255,255,0.85);background:transparent;color:var(--text-strong);font-family:inherit;font-weight:500;font-size:11px;letter-spacing:0.3em;cursor:pointer;text-decoration:none;transition:background .3s ease,color .3s ease}
+.btn:hover{background:#eef3f5;color:#23303b}
+.btn[disabled]{opacity:.6;cursor:progress}
+.note{margin:0;font-size:12px;line-height:1.7;color:var(--label)}
+.error{margin:0;font-size:13px;color:#fff}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+[hidden]{display:none !important}
+
+/* ---------- motion ---------- */
+@keyframes fxUp{from{opacity:0;transform:translateY(14px)}to{opacity:var(--op,1);transform:none}}
+@keyframes fxIn{from{opacity:0}to{opacity:var(--op,1)}}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes drift{
+  0%{opacity:0;transform:translate(0,0)}
+  15%{opacity:var(--o)}
+  85%{opacity:var(--o)}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy))}
+}
+.fx{opacity:0;animation:fxUp 1.2s cubic-bezier(.2,.7,.2,1) var(--d,0s) forwards}
+.fi{opacity:0;animation:fxIn 2.4s ease var(--d,0s) forwards}
+.mote{position:absolute;border-radius:50%;opacity:0;animation-name:drift;animation-timing-function:linear;animation-iteration-count:infinite}
+@media (prefers-reduced-motion:reduce){
+  .fx,.fi{animation:none;opacity:var(--op,1)}
+  .rule{animation:none;transform:none}
+  .mote{animation:none;opacity:.2}
+}
+@media (max-width:600px){
+  .column{padding:56px 20px 16px;gap:56px}
+  .tagline{font-size:15px}
+  .feature{gap:28px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <img class="bg-photo" src="/assets/desk-bg.jpg" alt="" aria-hidden="true">
+  <div class="dust fi" id="dust" aria-hidden="true" style="--d:.4s"></div>
+
+  <main class="column">
+
+    <header class="masthead">
+      <div class="glow fi" aria-hidden="true"></div>
+      <h1 class="logo fx" style="--d:.2s"><img src="/assets/rand-pierce-logo.png" width="1398" height="152" alt="Rand Pierce"></h1>
+      <p class="tagline fx" style="--d:.7s;--op:.8">SCREENWRITER</p>
+    </header>
+
+    <section class="feature" aria-label="Featured screenplay">
+      <span class="rule top" aria-hidden="true"></span>
+      <span class="rule bottom" aria-hidden="true"></span>
+
+      <img class="poster fx" style="--d:1.3s" src="/assets/pop-pop-poster.jpg" width="900" height="1350"
+           alt="POP POP poster: a man in a Hawaiian shirt and a woman in a dark suit stand back to back. Tagline: Blood is thicker than protocol.">
+
+      <div class="details fx" style="--d:1.5s">
+        <div class="details-top">
+          <p class="eyebrow">FEATURE SCREENPLAY</p>
+          <h2 class="title">POP POP</h2>
+          <p class="logline">When a by-the-book CIA assassin is paired with the estranged, carefree grandfather she barely remembers to kill his old partner, they discover the partner was framed and must fake his death before the Director who ordered the hit makes them his next targets.</p>
+        </div>
+        <div class="meta">
+          <div>
+            <div><span class="k">GENRE:</span> ACTION-COMEDY</div>
+            <div><span class="k">PAGES:</span> 110</div>
+          </div>
+          <div><span class="k">STATUS:</span> <span class="status">FOR SALE OR OPTION</span></div>
+        </div>
+      </div>
+
+      <div class="read-col fx" style="--d:1.7s">
+        <button type="button" class="readbtn" id="read-now" aria-label="Read now: get the POP POP screenplay">
+          <svg aria-hidden="true" viewBox="0 0 100 130" width="84" height="109">
+            <path class="pg" d="M1 1 H70 L99 30 V129 H1 Z" stroke="rgba(255,255,255,0.9)" stroke-width="1"></path>
+            <path d="M70 1 V30 H99" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1"></path>
+          </svg>
+          <span class="readtxt">READ<br>NOW</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Stretches to the full column width via textLength; the whole line scales down on narrow screens. -->
+    <p class="pipeline fx" style="--d:2s;--op:.8">
+      <svg viewBox="0 0 836 22" role="img" aria-label="New and original screenplays in development">
+        <text x="0" y="16" textLength="836" lengthAdjust="spacing" fill="#d3dee4" style="font-family:'Cabin',sans-serif;font-weight:400;font-size:16px">NEW AND ORIGINAL SCREENPLAYS IN DEVELOPMENT</text>
+      </svg>
+    </p>
+
+    <nav class="footer-nav fx" style="--d:2.3s" aria-label="Site">
+      <button type="button" data-open="dlg-about">ABOUT</button>
+      <a href="https://bsky.app/profile/randpierce.bsky.social" rel="noopener">SOCIAL</a>
+      <button type="button" data-open="dlg-terms">TERMS</button>
+      <button type="button" data-open="dlg-contact">CONTACT</button>
+    </nav>
+
+  </main>
+</div>
+
+<!-- ===== Download dialog: email gate ===== -->
+<dialog id="dlg-download" aria-labelledby="dl-title">
+  <div class="dlg-body">
+    <button type="button" class="closebtn" data-close aria-label="Close">&times;</button>
+
+    <form id="email-form" class="stack" novalidate>
+      <h2 class="dlg-title" id="dl-title" style="margin:0">READ POP POP</h2>
+      <p class="dlg-copy">Enter your email and the script is yours.</p>
+      <label class="field-label" for="email">EMAIL ADDRESS</label>
+      <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+      <!-- honeypot: real users never see or fill this -->
+      <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <p class="error" id="email-error" role="alert" hidden></p>
+      <button type="submit" class="btn" id="email-submit">CONTINUE</button>
+      <!-- Wording matches how the list is used: only to send the script. Update if that ever changes. -->
+      <p class="note">I'll use your email to send you the script.</p>
+    </form>
+
+    <div id="download-done" class="stack" hidden>
+      <h2 class="dlg-title" style="margin:0">THANK YOU</h2>
+      <p class="dlg-copy">Download POP POP below. Enjoy the read.</p>
+      <a class="btn" id="download-link" href="#" download>DOWNLOAD PDF</a>
+      <p class="note">PDF &middot; 110 pages</p>
+    </div>
+  </div>
+</dialog>
+
+<!-- ===== Footer dialogs (placeholder copy: owner to supply final text) ===== -->
+<dialog id="dlg-about" class="wide" aria-labelledby="about-title">
+  <div class="dlg-body">
+    <button type="button" class="closebtn" data-close aria-label="Close">&times;</button>
+    <h2 class="dlg-title" id="about-title">ABOUT</h2>
+    <p class="dlg-text">[Short bio about Rand Pierce goes here: who you are, where you write from, what you write, and what you're working on next.]</p>
+  </div>
+</dialog>
+
+<dialog id="dlg-terms" class="wide" aria-labelledby="terms-title">
+  <div class="dlg-body">
+    <button type="button" class="closebtn" data-close aria-label="Close">&times;</button>
+    <h2 class="dlg-title" id="terms-title">TERMS</h2>
+    <p class="dlg-text">[Terms go here: the screenplay is copyrighted material, provided for reading only, and may not be copied, distributed, or produced without written permission. Your email is used only to deliver the script.]</p>
+  </div>
+</dialog>
+
+<dialog id="dlg-contact" class="wide" aria-labelledby="contact-title">
+  <div class="dlg-body">
+    <button type="button" class="closebtn" data-close aria-label="Close">&times;</button>
+    <h2 class="dlg-title" id="contact-title">CONTACT</h2>
+    <p class="dlg-text">For options, purchases, or representation inquiries, reach out at [YOUR CONTACT EMAIL].</p>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- floating dust ---------- */
+  var dust = document.getElementById('dust');
+  var count = window.matchMedia('(max-width: 600px)').matches ? 30 : 50;
+  var seed = 23;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  for (var i = 0; i < count; i++) {
+    var s = (0.9 + rnd() * 2).toFixed(1);
+    var pale = rnd() > 0.5;
+    var m = document.createElement('span');
+    m.className = 'mote';
+    m.style.cssText =
+      'left:' + (rnd() * 100).toFixed(1) + '%;top:' + (rnd() * 100).toFixed(1) + '%;' +
+      'width:' + s + 'px;height:' + s + 'px;' +
+      'background:' + (pale ? 'rgba(240,247,252,0.9)' : 'rgba(176,204,222,0.9)') + ';' +
+      'animation-duration:' + (10 + rnd() * 14).toFixed(1) + 's;' +
+      'animation-delay:-' + (rnd() * 30).toFixed(1) + 's;' +
+      '--dx:' + Math.round(-50 + rnd() * 100) + 'px;' +
+      '--dy:' + Math.round(-130 + rnd() * 80) + 'px;' +
+      '--o:' + (0.12 + rnd() * 0.33).toFixed(2);
+    dust.appendChild(m);
+  }
+
+  /* ---------- generic dialog wiring ---------- */
+  function wireDialog(dlg) {
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); }); // backdrop click
+  }
+  var dialogs = document.querySelectorAll('dialog');
+  for (var d = 0; d < dialogs.length; d++) wireDialog(dialogs[d]);
+  document.querySelectorAll('[data-close]').forEach(function (b) {
+    b.addEventListener('click', function () { b.closest('dialog').close(); });
+  });
+  document.querySelectorAll('[data-open]').forEach(function (b) {
+    b.addEventListener('click', function () { document.getElementById(b.dataset.open).showModal(); });
+  });
+
+  /* ---------- email gate ---------- */
+  var dlg = document.getElementById('dlg-download');
+  var form = document.getElementById('email-form');
+  var input = document.getElementById('email');
+  var err = document.getElementById('email-error');
+  var submit = document.getElementById('email-submit');
+  var done = document.getElementById('download-done');
+  var link = document.getElementById('download-link');
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Opening index.html straight from disk (no server) uses a placeholder link so the flow can be previewed.
+  var PREVIEW_ONLY = location.protocol === 'file:';
+
+  function showError(msg) { err.textContent = msg; err.hidden = false; }
+  function reset() {
+    form.hidden = false; done.hidden = true; err.hidden = true;
+    input.value = ''; submit.disabled = false; submit.textContent = 'CONTINUE';
+  }
+
+  document.getElementById('read-now').addEventListener('click', function () {
+    reset(); dlg.showModal(); input.focus();
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = input.value.trim();
+    if (!EMAIL_RE.test(email)) { showError('Please enter a valid email address.'); return; }
+    err.hidden = true;
+    submit.disabled = true; submit.textContent = 'ONE MOMENT...';
+
+    var honeypot = form.elements['website'].value;
+    var request = PREVIEW_ONLY
+      ? Promise.resolve({ downloadUrl: '#' })
+      : fetch('/api/download', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, website: honeypot })
+        }).then(function (res) {
+          if (!res.ok) throw new Error('bad status ' + res.status);
+          return res.json();
+        });
+
+    request.then(function (data) {
+      link.href = data.downloadUrl;
+      form.hidden = true; done.hidden = false;
+      link.focus();
+    }).catch(function () {
+      showError('Something went wrong. Please try again.');
+      submit.disabled = false; submit.textContent = 'CONTINUE';
+    });
+  });
+})();
+</script>
+</body>
+</html>

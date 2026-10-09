@@ -1,0 +1,16 @@
+{
+  "outputDirectory": "public",
+  "functions": {
+    "api/script.js": {
+      "includeFiles": "private/**"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "www.randpierce.com" }],
+      "destination": "https://randpierce.com/:path",
+      "permanent": true
+    }
+  ]
+}
